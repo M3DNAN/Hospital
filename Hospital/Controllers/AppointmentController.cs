@@ -1,6 +1,7 @@
 ﻿using Hospital.Data;
 using Hospital.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace Hospital.Controllers
 {
@@ -19,6 +20,9 @@ namespace Hospital.Controllers
         }
         public IActionResult ViewMyAppointments(Appointment appointment)
         {
+            appointment.DoctorName = (string)TempData["CurrentDoctorName"];
+            appointment.DoctorId = (int)TempData["CurrentDoctorID"];
+
             context.Appointments.Add(appointment);
             context.SaveChanges();
             return RedirectToAction("MyAppointments");

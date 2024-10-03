@@ -1,6 +1,7 @@
 ﻿using Hospital.Data;
 using Hospital.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace Hospital.Controllers
 {
@@ -14,7 +15,11 @@ namespace Hospital.Controllers
         }
         public IActionResult CompleteAppointment(string name)
         {
+           
             var Appointment = context.Doctors.Where(e=>e.Name==name).FirstOrDefault();
+            TempData["CurrentDoctorName"] = Appointment.Name;
+            TempData["CurrentDoctorID"] = Appointment.Id;
+
             return View(Appointment);
         }
         public IActionResult BookAppointment()

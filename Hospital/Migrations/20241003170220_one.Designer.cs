@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240930222309_c")]
-    partial class c
+    [Migration("20241003170220_one")]
+    partial class one
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,21 +25,26 @@ namespace Hospital.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("IdNumbers");
+
             modelBuilder.Entity("Hospital.Models.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR IdNumbers");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("DoctorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -76,6 +81,43 @@ namespace Hospital.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Img = "doctor1.jpg",
+                            Name = "Dr. John Smith",
+                            Specialization = "Cardiology"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Img = "doctor3.jpg",
+                            Name = "Dr. Sarah Johnson",
+                            Specialization = "Pediatrics"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Img = "doctor5.jpg",
+                            Name = "Dr. Emily Davis",
+                            Specialization = "Dermatology"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Img = "doctor6.jpg",
+                            Name = "Dr. Michael Lee",
+                            Specialization = "Orthopedics"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Img = "doctor4.jpg",
+                            Name = "Dr. William Clark",
+                            Specialization = "Neurology"
+                        });
                 });
 
             modelBuilder.Entity("Hospital.Models.Appointment", b =>
