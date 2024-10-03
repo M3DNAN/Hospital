@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Make an Appointment";
+}
+@* @{
+    var alertMessage = "This is a Bootstrap styled alert!";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // When the button is clicked, show the alert
+        $('#showAlertBtn').click(function () {
+            $('#bootstrapAlert').removeClass('d-none'); // Show the alert
+        });
+    }); *@
+</script>
+<br />
+<br />
+<br />
+
+<h2>Make an Appointment with @Model.Name </h2>
+
+
+    <a href="https://localhost:7213/Appointment/index" id="showAlertBtn" type="submit" class="btn btn-primary">Book Appointment</a>
+ @*    <div id="bootstrapAlert" class="alert alert-success d-none" role="alert">
+        @alertMessage
+    </div> *@
+
+
+
